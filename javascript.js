@@ -9,8 +9,11 @@ const divide = (a, b) => a / b;
 
 // Operate function that takes 2 numbers and calls one of the above functions
 const operate = (a, b, arithmetic) => {
-    
+    return arithmetic(a, b);
 };
+const outputWindow = document.querySelector('.output.container');
+outputWindow.textContent = operate(1, 3, subtract);
+
 // Use the array reduce function to make mutiple calculations
 // Answers with long decimals should be rounded
 // Clicking = before entering all numbers should cause an error
