@@ -1,12 +1,16 @@
 // Add function
 const add = (a, b) => a + b;
 // Subtract function
+const subtract = (a, b) => a - b;
 // Multiply function
+const multiply = (a, b) => a * b;
 // Divide function
-
-console.log(add(1, 3));
+const divide = (a, b) => a / b;
 
 // Operate function that takes 2 numbers and calls one of the above functions
+const operate = (a, b, arithmetic) => {
+    
+};
 // Use the array reduce function to make mutiple calculations
 // Answers with long decimals should be rounded
 // Clicking = before entering all numbers should cause an error
