@@ -2,6 +2,9 @@
     border: medium solid black;
     padding: 10px;
 }
+.output.container {
+    min-height: 20px;
+}
 .OB.container {
     display: flex;
     flex-direction: column;

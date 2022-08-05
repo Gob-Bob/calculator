@@ -12,7 +12,31 @@ const operate = (a, b, arithmetic) => {
     return arithmetic(a, b);
 };
 const outputWindow = document.querySelector('.output.container');
-outputWindow.textContent = operate(1, 3, subtract);
+
+let firstStoredValue = "";
+let results = "";
+
+document.querySelectorAll('button').forEach((item) => {
+    item.addEventListener('click', () => {
+        if (item.innerHTML == "Clear") {
+            outputWindow.textContent = "";
+        } else if (item.innerHTML == "+") {
+            // Store current output window value into a stored variable
+            firstStoredValue = outputWindow.textContent;
+            // Clear current output window
+            outputWindow.textContent = "";
+            console.log(firstStoredValue);
+        } else if (item.innerHTML == "=") {
+            // Add stored variable with current output value
+            results = parseInt(firstStoredValue) + parseInt(outputWindow.textContent);
+            // Clear old output window value
+            // Return arithmetic results
+            outputWindow.textContent = results;
+        } else {
+            outputWindow.textContent += item.innerHTML;
+        }
+    });
+});
 
 // Use the array reduce function to make mutiple calculations
 // Answers with long decimals should be rounded
