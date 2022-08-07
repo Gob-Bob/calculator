@@ -7,34 +7,47 @@ const multiply = (a, b) => a * b;
 // Divide function
 const divide = (a, b) => a / b;
 
+const convertOperation = operation => {
+    if (operation == "+") {
+        return add;
+    } else if (operation == "-") {
+        return subtract;
+    } else if (operation == "*") {
+        return multiply;
+    } else if (operation == "/") {
+        return divide;
+    }
+}
+
+const convertNumStringToNum = num => {
+    return parseInt(num);
+}
+
 // Operate function that takes 2 numbers and calls one of the above functions
 const operate = (a, b, arithmetic) => {
     return arithmetic(a, b);
 };
 const outputWindow = document.querySelector('.output.container');
-
-let firstStoredValue = "";
-let results = "";
+let firstStoredVariable;
+let secondStoredVariable;
+let operatingVariable;
 
 document.querySelectorAll('button').forEach((item) => {
     item.addEventListener('click', () => {
-        if (item.innerHTML == "Clear") {
+        let buttonContent = item.innerHTML;
+        if (isNaN(buttonContent) && buttonContent != "=") {
+            firstStoredVariable = outputWindow.textContent;
+            operatingVariable = buttonContent;
             outputWindow.textContent = "";
-        } else if (item.innerHTML == "+") {
-            // Store current output window value into a stored variable
-            firstStoredValue = outputWindow.textContent;
-            // Clear current output window
+        } else if (buttonContent == "=") {
+            secondStoredVariable = outputWindow.textContent;
+            outputWindow.textContent = operate(parseInt(firstStoredVariable), parseInt(secondStoredVariable), convertOperation(operatingVariable));
+        } else if (buttonContent == "Clear") {
             outputWindow.textContent = "";
-            console.log(firstStoredValue);
-        } else if (item.innerHTML == "=") {
-            // Add stored variable with current output value
-            results = parseInt(firstStoredValue) + parseInt(outputWindow.textContent);
-            // Clear old output window value
-            // Return arithmetic results
-            outputWindow.textContent = results;
         } else {
-            outputWindow.textContent += item.innerHTML;
+            outputWindow.textContent += buttonContent;
         }
+        console.log(outputWindow.textContent);
     });
 });
 
