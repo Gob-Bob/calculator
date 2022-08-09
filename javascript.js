@@ -29,40 +29,35 @@ const operate = (a, b, arithmetic) => {
 };
 const outputWindow = document.querySelector('.output.container');
 let numArray = [];
-let firstOperatingVariable;
-let secondOperatingVariable;
+let operateVarArray = [];
 
 document.querySelectorAll('button').forEach((item) => {
     item.addEventListener('click', () => {
-        let buttonContent = item.innerHTML;
-        if (isNaN(buttonContent) && buttonContent != "=" && buttonContent != "Clear") {
-            numArray.push(outputWindow.textContent);
-            outputWindow.textContent = "";
-            if (numArray.length == 1) {
-                firstOperatingVariable = buttonContent;
-                outputWindow.textContent = "";
-            } else if (numArray.length == 2) {
-                outputWindow.textContent = operate(parseInt(numArray[0]), parseInt(numArray[1]), convertOperation(firstOperatingVariable))
-                secondOperatingVariable = buttonContent;
-                result = outputWindow.textContent;
-                outputWindow.textContent = ""
-                numArray = [];
-                console.log(numArray.push(result));
-            }
-        } else if (buttonContent == "=") {
-            numArray.push(outputWindow.textContent);
-            outputWindow.textContent = operate(parseInt(numArray[0]), parseInt(numArray[1]), convertOperation(secondOperatingVariable));
-        } else if (buttonContent == "Clear") {
-            outputWindow.textContent = "";
-            numArray = [];
-        } else {
-            outputWindow.textContent += buttonContent;
-        }
-        console.log(numArray);
-    });
+        // If only numbers are pressed,
+        //      If numArray[0] is NOT empty,
+        //          clear the current output window
+        //      add the number pressed into the output window
+        // Else if any arithmetic button is pressed,
+        //      If there already is an arithmetic operation stored in operateVarArray[0],
+        //          current numbers in the output window will be pushed into numArray
+        //          run the operating function for numArray[0] and numArray[1] using operateVarArray[0]
+        //          output window should show the result
+        //          the numArray should be cleared 
+        //          operateVarArray should be cleared
+        //          result of operation function should be pushed to numArray
+        //          currently pressed arithmetic button should be pushed to operateVarArray
+        //      Else if there is NOT an arithmetic operation stored in operateVarArray[0],
+        //          current numbers in the output window will be pushed into numArray
+        //          the arithmetic button pressed will be pushed into operateVarArray
+        // Else if = is pressed,
+        //      current number within the output window will be pushed into numArray
+        //      run the operating function for numArray[0] and numArray[1] using operateVarArray[0]
+        //      output window should show the result
+        //      the numArray should be cleared 
+        //      operateVarArray should be cleared
+        // Else if Clear is pressed,
+        //      the numArray should be cleared 
+        //      operateVarArray should be cleared
+        //      output window should be cleared
+    })
 });
-
-// Use the array reduce function to make mutiple calculations
-// Answers with long decimals should be rounded
-// Clicking = before entering all numbers should cause an error
-// Dividing by 0 should return an error message
