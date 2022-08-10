@@ -30,16 +30,18 @@ const operate = (a, b, arithmetic) => {
 const outputWindow = document.querySelector('.output.container');
 let numArray = [];
 let operateVarArray = [];
+let mustClear = false;
 
 document.querySelectorAll('button').forEach((item) => {
     item.addEventListener('click', () => {
         let buttonContent = item.innerHTML;
         // If only numbers are pressed,
         if (isNaN(buttonContent) == false) {
-            // If numArray[0] is NOT empty,
-            if (numArray.length != 0) {
-                // clear the current output window
+            // If mustClear condition is true then clear
+            if (mustClear == true) {
                 outputWindow.textContent = "";
+                // set mustClear back to false
+                mustClear = false;
             }
             // add the number pressed into the output window
             outputWindow.textContent += buttonContent;
@@ -93,6 +95,8 @@ document.querySelectorAll('button').forEach((item) => {
                 numArray.push(outputWindow.textContent);
                 // the arithmetic button pressed will be pushed into operateVarArray
                 operateVarArray.push(buttonContent);
+                // set condition that next numbers put in must clear current output window
+                mustClear = true;
             }
         }
     })
