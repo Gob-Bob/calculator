@@ -17,11 +17,11 @@ const convertOperation = operation => {
     } else if (operation == "/") {
         return divide;
     }
-}
+};
 
 const convertNumStringToNum = num => {
     return parseInt(num);
-}
+};
 
 // Operate function that takes 2 numbers and calls one of the above functions
 const operate = (a, b, arithmetic) => {
@@ -33,31 +33,67 @@ let operateVarArray = [];
 
 document.querySelectorAll('button').forEach((item) => {
     item.addEventListener('click', () => {
+        let buttonContent = item.innerHTML;
         // If only numbers are pressed,
-        //      If numArray[0] is NOT empty,
-        //          clear the current output window
-        //      add the number pressed into the output window
-        // Else if any arithmetic button is pressed,
-        //      If there already is an arithmetic operation stored in operateVarArray[0],
-        //          current numbers in the output window will be pushed into numArray
-        //          run the operating function for numArray[0] and numArray[1] using operateVarArray[0]
-        //          output window should show the result
-        //          the numArray should be cleared 
-        //          operateVarArray should be cleared
-        //          result of operation function should be pushed to numArray
-        //          currently pressed arithmetic button should be pushed to operateVarArray
-        //      Else if there is NOT an arithmetic operation stored in operateVarArray[0],
-        //          current numbers in the output window will be pushed into numArray
-        //          the arithmetic button pressed will be pushed into operateVarArray
+        if (isNaN(buttonContent) == false) {
+            // If numArray[0] is NOT empty,
+            if (numArray.length != 0) {
+                // clear the current output window
+                outputWindow.textContent = "";
+            }
+            // add the number pressed into the output window
+            outputWindow.textContent += buttonContent;
         // Else if = is pressed,
-        //      current number within the output window will be pushed into numArray
-        //      run the operating function for numArray[0] and numArray[1] using operateVarArray[0]
-        //      output window should show the result
-        //      the numArray should be cleared 
-        //      operateVarArray should be cleared
+        } else if (buttonContent == "=") {
+        // If operateVarArray is empty,
+            if (operateVarArray.length == 0) {
+                // do nothing
+                ;
+            // Otherwise,
+            } else {
+                // current number within the output window will be pushed into numArray
+                numArray.push(outputWindow.textContent);
+                // run the operating function for numArray[0] and numArray[1] using operateVarArray[0]
+                // output window should show the result
+                outputWindow.textContent = operate(parseInt(numArray[0]), parseInt(numArray[1]), convertOperation(operateVarArray[0]))
+                // the numArray should be cleared 
+                numArray = [];
+                // operateVarArray should be cleared
+                operateVarArray = [];
+            }
         // Else if Clear is pressed,
-        //      the numArray should be cleared 
-        //      operateVarArray should be cleared
-        //      output window should be cleared
+        } else if (buttonContent == "Clear") {
+            // the numArray should be cleared 
+            numArray = [];
+            // operateVarArray should be cleared
+            operateVarArray = [];
+            // output window should be cleared
+            outputWindow.textContent = "";
+        // Else if any arithmetic button is pressed,
+        } else {
+            // If there already is an arithmetic operation stored in operateVarArray[0],
+            if (operateVarArray.length != 0) {
+                // current numbers in the output window will be pushed into numArray
+                numArray.push(outputWindow.textContent);
+                // run the operating function for numArray[0] and numArray[1] using operateVarArray[0]
+                results = operate(parseInt(numArray[0]), parseInt(numArray[1]), convertOperation(operateVarArray[0]))
+                // output window should show the result
+                outputWindow.textContent = results;
+                // the numArray should be cleared 
+                numArray = [];
+                // operateVarArray should be cleared
+                operateVarArray = [];
+                // result of operation function should be pushed to numArray
+                numArray.push(results);
+                // currently pressed arithmetic button should be pushed to operateVarArray
+                operateVarArray.push(buttonContent);
+            // Else if there is NOT an arithmetic operation stored in operateVarArray[0],
+            } else {
+                // current numbers in the output window will be pushed into numArray
+                numArray.push(outputWindow.textContent);
+                // the arithmetic button pressed will be pushed into operateVarArray
+                operateVarArray.push(buttonContent);
+            }
+        }
     })
 });
